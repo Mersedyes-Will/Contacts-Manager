@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class ContactsManagerRunner {
 
@@ -7,8 +8,7 @@ public class ContactsManagerRunner {
 
         HashMap<String, Contact> contacts = getContacts();
 
-        printHeader();
-        printContact(contacts);
+        viewAllContacts(contacts);
 
     }
 
@@ -59,6 +59,21 @@ public class ContactsManagerRunner {
 
         }
 
+    }
+
+    public static void viewAllContacts (HashMap<String, Contact> contacts) {
+        printHeader();
+        printContact(contacts);
+    }
+
+    public static void getNewKey () {
+
+    }
+
+    public static void addContact (HashMap<String, Contact> contacts) {
+        String uniqueID = UUID.randomUUID().toString();
+
+        System.out.println(uniqueID);
     }
 }
 
