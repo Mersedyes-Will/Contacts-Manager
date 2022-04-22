@@ -1,16 +1,16 @@
 public class Contact {
 
-    private int id;
+    //private int id;
     private String name;
     private String phoneNumber;
 
-    public Contact(int id){
-        this.id = id;
+    public Contact(String name, String phoneNumber){
+
     }
 
-    public int getId(int id){
-        return id;
-    }
+//    public int getId(int id){
+//        return id;
+//    }
 
     public String getName() {
         return name;
@@ -20,9 +20,9 @@ public class Contact {
         return phoneNumber;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public void setName(String name) {
         this.name = name;

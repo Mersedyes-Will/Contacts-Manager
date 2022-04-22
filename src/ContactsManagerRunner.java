@@ -32,31 +32,19 @@ public class ContactsManagerRunner {
 
 
     private static HashMap<String, Contact> getContacts() {
-        Contact student1 = new Contact("billi");
+        Contact contact1 = new Contact("Bob", "210-444-4444");
 
-        student1.addGrade(90);
-        student1.addGrade(65);
-        student1.addGrade(100);
+        Contact contact2 = new Contact("Sally", "218-253-4544");
 
-        Contact student2 = new Contact("susie");
-
-        student2.addGrade(100);
-        student2.addGrade(100);
-        student2.addGrade(100);
-
-        Contact student3 = new Contact("ralph");
-
-        student3.addGrade(0);
-        student3.addGrade(0);
-        student3.addGrade(25);
+        Contact contact3 = new Contact("Joe", "719-890-1530");
 
         HashMap<String, Contact> contacts = new HashMap<>();
 
-        String student1gh = "billiversustheworld";
+//        String student1gh = "billiversustheworld";
 
-        contacts.put(student1gh, student1);
-        contacts.put("ohsusanna", student2);
-        contacts.put("rektralph", student3);
+        contacts.put("1", contact1);
+        contacts.put("2", contact2);
+        contacts.put("3", contact3);
 
         return contacts;
     }
