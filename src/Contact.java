@@ -32,24 +32,4 @@ public class Contact {
         this.phoneNumber = phoneNumber;
     }
 
-    public static String stringConstructor (String contactProperty) {
-        for (int i = contactProperty.length(); i <= 15; i++) {
-            contactProperty = contactProperty + " ";
-        }
-        return contactProperty;
-    }
-
-    public void printContact(){
-//            System.out.println("      Name      |  Phone Number  ");
-//            System.out.println("----------------------------------");
-            System.out.println(stringConstructor(getName()) + "|" + stringConstructor(getPhoneNumber()) + "|");
-    }
-
-
-
-
-
-
-
-
 }
