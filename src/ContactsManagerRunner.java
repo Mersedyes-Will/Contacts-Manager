@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class ContactsManagerRunner {
 
@@ -31,18 +30,18 @@ public class ContactsManagerRunner {
         return contacts;
     }
 
-    public static String nameFormatter(String contactProperty) {
-        for (int i = contactProperty.length(); i <= 24; i++) {
-            contactProperty = contactProperty + " ";
+    public static String nameFormatter(String name) {
+        for (int i = name.length(); i <= 24; i++) {
+            name = name + " ";
         }
-        return contactProperty;
+        return name;
     }
 
-    public static String phoneNumberFormatter(String contactProperty) {
-        for (int i = contactProperty.length(); i <= 12; i++) {
-            contactProperty = contactProperty + " ";
+    public static String phoneNumberFormatter(String phoneNumber) {
+        for (int i = phoneNumber.length(); i <= 12; i++) {
+            phoneNumber = phoneNumber + " ";
         }
-        return contactProperty;
+        return phoneNumber;
     }
 
     public static void printHeader() {
@@ -50,7 +49,7 @@ public class ContactsManagerRunner {
         System.out.println("-------------------------------------------");
     }
 
-    public static void printContact(HashMap<String, Contact> contacts) {
+    public static void printContacts(HashMap<String, Contact> contacts) {
         for (Map.Entry<String, Contact> person : contacts.entrySet()) {
 
             Contact chosenOne = person.getValue();
@@ -63,17 +62,24 @@ public class ContactsManagerRunner {
 
     public static void viewAllContacts (HashMap<String, Contact> contacts) {
         printHeader();
-        printContact(contacts);
+        printContacts(contacts);
     }
 
-    public static void getNewKey () {
+    public static String getNewKey (HashMap<String, Contact> contacts) {
+        String newKey = "";
+        for (int i = 1; i <= contacts.size(); i++) {
+            String currentKey = String.valueOf(i);
+            if (contacts.containsKey(currentKey)) {
 
+            } else {
+                newKey = currentKey;
+            }
+        }
+        return newKey;
     }
 
     public static void addContact (HashMap<String, Contact> contacts) {
-        String uniqueID = UUID.randomUUID().toString();
 
-        System.out.println(uniqueID);
     }
 }
 
