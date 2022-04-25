@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class ContactsManagerRunner {
 
@@ -80,6 +81,22 @@ public class ContactsManagerRunner {
 
     public static void addContact (HashMap<String, Contact> contacts) {
 
+    }
+
+    public static int displayMenu(){
+        System.out.println("-----------------------------------------");
+        System.out.println("\nGood day, please select a menu item:");
+        System.out.println("  1. View contacts");
+        System.out.println("  2. Add a new contact");
+        System.out.println("  3. Search a contact by name");
+        System.out.println("  4. Delete an existing contact");
+        System.out.println("  5. Exit");
+        System.out.println("\nEnter option (1, 2, 3, 4, or 5): ");
+        System.out.println("-----------------------------------------");
+
+        Scanner sc = new Scanner(System.in);
+        int selectChoice = sc.nextInt();
+        return selectChoice;
     }
 }
 
