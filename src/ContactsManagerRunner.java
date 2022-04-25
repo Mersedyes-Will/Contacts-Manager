@@ -1,15 +1,13 @@
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
 public class ContactsManagerRunner {
 
     public static void main(String[] args) {
-
         HashMap<String, Contact> contacts = getContacts();
         executeChoice(contacts, getChoice());
-
-
     }
 
     public static String nextId (HashMap<String, Contact> contacts) {
@@ -68,19 +66,6 @@ public class ContactsManagerRunner {
         printContacts(contacts);
     }
 
-    public static String getNewKey(HashMap<String, Contact> contacts) {
-        String newKey = "";
-        for (int i = 1; i <= contacts.size(); i++) {
-            String currentKey = String.valueOf(i);
-            if (contacts.containsKey(currentKey)) {
-
-            } else {
-                newKey = currentKey;
-            }
-        }
-        return newKey;
-    }
-
     public static int getChoice() {
         System.out.println("\n-----------------------------------------");
         System.out.println("Good day, please select a menu item:");
@@ -110,8 +95,7 @@ public class ContactsManagerRunner {
                 addContact(contacts);
                 break;
             } else if (choice == 3){
-//                searchContact(contacts);
-                System.out.println("Run searchContact");
+                searchContact(contacts);
                 break;
             } else if (choice == 4){
 //                deleteContact(contacts);
@@ -127,7 +111,6 @@ public class ContactsManagerRunner {
                 System.out.flush();
                 System.out.println("-----------------------------------------");
                 System.out.println("\nThat was not a valid entry.  Try Again.");
-                System.out.println("");
                 executeChoice(contacts, getChoice());
             }
         }
@@ -140,28 +123,27 @@ public class ContactsManagerRunner {
         previewContact(name, phoneNumber);
         String confirmContact = Input.getString("\nIs the above information correct?  (Y/N):");
         Boolean confirm1 = Input.yesNo(confirmContact);
+
         if (confirm1) {
             Contact newContact = new Contact(name, phoneNumber);
             contacts.put(nextId(contacts), newContact);
-            System.out.println("");
-            System.out.println("-----------------------------------------");
+            System.out.println("\n-----------------------------------------");
             System.out.println("Contact has been added");
-            System.out.println("");
             String confirmReturnToMainMenu = Input.getString("\nWould you like to return to the main menu?  (Y/N):");
             Boolean confirm2 = Input.yesNo(confirmReturnToMainMenu);
             System.out.println("-----------------------------------------");
+
             if (confirm2) {
                 executeChoice(contacts, getChoice());
             }
         }   else {
-            System.out.println("");
-            System.out.println("-----------------------------------------");
+            System.out.println("\n-----------------------------------------");
             System.out.println("Contact was not added");
-            System.out.println("");
-            System.out.println("Would you like to re-enter the contact information?");
-            String confirmTryAddAgain = Input.getString("\nEnter (Y) to continue or Enter (N) to return to main menu:");
+            System.out.println("\nWould you like to re-enter the contact information?");
+            String confirmTryAddAgain = Input.getString("\nEnter (Y) to continue or (N) to return to main menu:");
             Boolean confirm3 = Input.yesNo(confirmTryAddAgain);
             System.out.println("-----------------------------------------");
+
             if (confirm3) {
                 addContact(contacts);
             } else {
@@ -183,6 +165,35 @@ public class ContactsManagerRunner {
         System.out.println("-----------------------------------------");
         return phoneNumber;
     }
+
+    public static void searchContact(HashMap<String, Contact> contacts) {
+        System.out.println("-----------------------------------------");
+        String searchInput = Input.getString("\nPlease Enter the Contact Name to Search:").toLowerCase();
+        System.out.println("-----------------------------------------");
+
+        for (String key : contacts.keySet()) {
+            String name = ((Contact) contacts.get(key)).getName().toLowerCase();
+            String phoneNumber = ((Contact) contacts.get(key)).getPhoneNumber().toLowerCase();
+            if (name.contains(searchInput)) {
+                printHeader();
+                previewContact(name, phoneNumber);
+            }
+        }
+
+        System.out.println("\n-----------------------------------------");
+        System.out.println("\nWould you like to search again?");
+        String confirmSearchAgain = Input.getString("\nEnter (Y) to search again or (N) to return to main menu:");
+        Boolean confirm = Input.yesNo(confirmSearchAgain);
+        System.out.println("-----------------------------------------");
+
+        if (confirm) {
+            searchContact(contacts);
+        } else {
+            executeChoice(contacts, getChoice());
+        }
+    }
+
+
 
 
 
