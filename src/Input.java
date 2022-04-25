@@ -10,9 +10,8 @@ public class Input {
     }
 
     public static boolean yesNo(String prompt) {
-        String userInput = scanner.next();
-        if (userInput.equalsIgnoreCase("y")
-                || userInput.equalsIgnoreCase("yes")) {
+        if (prompt.equalsIgnoreCase("y")
+                || prompt.equalsIgnoreCase("yes")) {
             return true;
         } else {
             return false;

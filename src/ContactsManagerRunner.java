@@ -8,7 +8,6 @@ public class ContactsManagerRunner {
 
         HashMap<String, Contact> contacts = getContacts();
         executeChoice(contacts, getChoice());
-//        viewContacts(contacts);
 
 
     }
@@ -148,7 +147,7 @@ public class ContactsManagerRunner {
             System.out.println("-----------------------------------------");
             System.out.println("Contact has been added");
             System.out.println("");
-            String confirmReturnToMainMenu = Input.getString("Would you like to return to the main menu?  (Y/N):");
+            String confirmReturnToMainMenu = Input.getString("\nWould you like to return to the main menu?  (Y/N):");
             Boolean confirm2 = Input.yesNo(confirmReturnToMainMenu);
             System.out.println("-----------------------------------------");
             if (confirm2) {
@@ -160,7 +159,7 @@ public class ContactsManagerRunner {
             System.out.println("Contact was not added");
             System.out.println("");
             System.out.println("Would you like to re-enter the contact information?");
-            String confirmTryAddAgain = Input.getString("Enter (Y) to continue or Enter (N) to return to main menu:");
+            String confirmTryAddAgain = Input.getString("\nEnter (Y) to continue or Enter (N) to return to main menu:");
             Boolean confirm3 = Input.yesNo(confirmTryAddAgain);
             System.out.println("-----------------------------------------");
             if (confirm3) {
