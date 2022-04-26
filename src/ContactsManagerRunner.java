@@ -1,13 +1,20 @@
+import java.sql.SQLOutput;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import fileio.*;
+
+
 
 public class ContactsManagerRunner {
 
+    public static HashMap<String, Contact> contacts = getContacts();
+
     public static void main(String[] args) {
-        HashMap<String, Contact> contacts = getContacts();
-        executeChoice(contacts, getChoice());
+
+        executeChoice(getChoice());
+//        FileHelper.tryWriteFile(FileHelper.tryMakeFileDirectory(), contacts.values().stream().toList());
+
     }
 
     public static String nextId (HashMap<String, Contact> contacts) {
@@ -16,18 +23,12 @@ public class ContactsManagerRunner {
     }
 
     private static HashMap<String, Contact> getContacts() {
-        Contact contact1 = new Contact("Bob", "210-444-4444");
-        Contact contact2 = new Contact("Sally", "218-253-4544");
-        Contact contact3 = new Contact("Joe", "719-890-1530");
-        Contact contact4 = new Contact("Mersedyes Livingston", "719-890-1530");
 
         HashMap<String, Contact> contacts = new HashMap<>();
 
-        contacts.put("1", contact1);
-        contacts.put("2", contact2);
-        contacts.put("3", contact3);
-        contacts.put("4", contact4);
-
+        for (Contact contactee : FileHelper.tryReadFile(FileHelper.tryMakeFileDirectory())) {
+            contacts.put(nextId(contacts), contactee);
+        }
         return contacts;
     }
 
@@ -46,7 +47,7 @@ public class ContactsManagerRunner {
     }
 
     public static void printHeader() {
-        System.out.println("Name                     |  Phone Number  |");
+        System.out.println("\nName                     |  Phone Number  |");
         System.out.println("-------------------------------------------");
     }
 
@@ -77,22 +78,22 @@ public class ContactsManagerRunner {
         System.out.println("\nEnter option (1, 2, 3, 4, or 5): ");
         System.out.println("-----------------------------------------");
         System.out.println("");
-
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         System.out.println("");
         return choice;
     }
 
-    public static void executeChoice(HashMap<String, Contact> contacts, int choice) {
+    public static void executeChoice(int choice) {
         for (int i = 1; i <= 5; i++) {
             if (choice == 1) {
                 viewContacts(contacts);
                 System.out.println("\n");
-                executeChoice(contacts, getChoice());
+                executeChoice(getChoice());
                 break;
             } else if (choice == 2) {
-                addContact(contacts);
+                addContact();
+                System.out.println(contacts.values().size());
                 break;
             } else if (choice == 3){
                 searchContact(contacts);
@@ -110,56 +111,52 @@ public class ContactsManagerRunner {
                 System.out.flush();
                 System.out.println("-----------------------------------------");
                 System.out.println("\nThat was not a valid entry.  Try Again.");
-                executeChoice(contacts, getChoice());
+                executeChoice(getChoice());
             }
         }
     }
 
-    public static void addContact(HashMap<String, Contact> contacts) {
+    public static void addContact() {
         String name = addName();
         String phoneNumber = addPhoneNumber();
         printHeader();
         previewContact(name, phoneNumber);
-        String confirmContact = Input.getString("\nIs the above information correct?  (Y/N):");
+        String confirmContact = Input.getString("\nAre you sure the above information is correct, and you would like to add this contact?  (Y/N):");
         Boolean confirm1 = Input.yesNo(confirmContact);
 
         if (confirm1) {
             Contact newContact = new Contact(name, phoneNumber);
             contacts.put(nextId(contacts), newContact);
+            FileHelper.tryWriteFile(FileHelper.tryMakeFileDirectory(), contacts.values().stream().toList());
             System.out.println("\n-----------------------------------------");
             System.out.println("Contact has been added");
-            String confirmReturnToMainMenu = Input.getString("\nWould you like to return to the main menu?  (Y/N):");
-            Boolean confirm2 = Input.yesNo(confirmReturnToMainMenu);
             System.out.println("-----------------------------------------");
-
-            if (confirm2) {
-                executeChoice(contacts, getChoice());
-            }
+            executeChoice(getChoice());
         }   else {
             System.out.println("\n-----------------------------------------");
             System.out.println("Contact was not added");
+            System.out.println("-----------------------------------------");
             System.out.println("\nWould you like to re-enter the contact information?");
             String confirmTryAddAgain = Input.getString("\nEnter (Y) to continue or (N) to return to main menu:");
             Boolean confirm3 = Input.yesNo(confirmTryAddAgain);
             System.out.println("-----------------------------------------");
-
             if (confirm3) {
-                addContact(contacts);
+                addContact();
             } else {
-                executeChoice(contacts, getChoice());
+                executeChoice(getChoice());
             }
         }
     }
 
     public static String addName() {
-        System.out.println("-----------------------------------------");
+        System.out.println("\n-----------------------------------------");
         String name = Input.getString("\nPlease Enter the Contact's Name:");
         System.out.println("-----------------------------------------");
         return name;
     }
 
     public static String addPhoneNumber() {
-        System.out.println("-----------------------------------------");
+        System.out.println("\n-----------------------------------------");
         String phoneNumber = Input.getString("\nPlease Enter the Contact's Phone Number:");
         System.out.println("-----------------------------------------");
         return phoneNumber;
@@ -188,7 +185,7 @@ public class ContactsManagerRunner {
         if (confirm) {
             searchContact(contacts);
         } else {
-            executeChoice(contacts, getChoice());
+            executeChoice(getChoice());
         }
     }
 
@@ -205,15 +202,11 @@ public class ContactsManagerRunner {
                 foundContact = true;
                 printHeader();
                 previewContact(name, phoneNumber);
-                String confirmDelete = Input.getString("\nAre you sure you would like to delete the contact(s)?" +
-                        "\nType (Y) to delete or (N) to continue").toLowerCase();
+                String confirmDelete = Input.getString("\nDelete the contact(s)?  Type (Y) to delete or (N) to continue").toLowerCase();
                 Boolean confirm1 = Input.yesNo(confirmDelete);
                 System.out.println("-----------------------------------------");
                 if (confirm1) {
-
-                    // Why you no work?
                     contacts.remove(searchInput);
-
                     System.out.println("-----------------------------------------");
                     System.out.println("Contact was deleted.");
                     System.out.println("-----------------------------------------");
@@ -236,9 +229,14 @@ public class ContactsManagerRunner {
         if (confirm2) {
             deleteContact(contacts);
         } else {
-            executeChoice(contacts, getChoice());
+            executeChoice(getChoice());
         }
     }
+
+    public static void writeContacts (List<Contact> contactsToWrite) {
+
+    }
+
 }
 
 
