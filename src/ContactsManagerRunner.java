@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -98,15 +97,14 @@ public class ContactsManagerRunner {
                 searchContact(contacts);
                 break;
             } else if (choice == 4){
-//                deleteContact(contacts);
-                System.out.println("Run deleteContact");
+                deleteContact(contacts);
                 break;
             } else if (choice == 5) {
                 System.out.flush();
                 System.out.println("-----------------------------------------");
                 System.out.println("\nHave a nice day! :D");
                 System.out.println("-----------------------------------------");
-                break;
+                System.exit(0);
             } else {
                 System.out.flush();
                 System.out.println("-----------------------------------------");
@@ -193,10 +191,54 @@ public class ContactsManagerRunner {
         }
     }
 
+    public static void deleteContact (HashMap<String, Contact> contacts) {
+        System.out.println("-----------------------------------------");
+        String searchInput = Input.getString("\nPlease search for the contact you would like to delete:");
+        System.out.println("-----------------------------------------");
+        Boolean foundContact = false;
 
+        for (String key : contacts.keySet()) {
+            String name = ((Contact) contacts.get(key)).getName().toLowerCase();
+            String phoneNumber = ((Contact) contacts.get(key)).getPhoneNumber().toLowerCase();
+            if (searchInput.equalsIgnoreCase(name)) {
+                foundContact = true;
+                printHeader();
+                previewContact(name, phoneNumber);
+                String confirmDelete = Input.getString("\nAre you sure you would like to delete the contact(s)?" +
+                        "\nType (Y) to delete or (N) to continue").toLowerCase();
+                Boolean confirm1 = Input.yesNo(confirmDelete);
+                System.out.println("-----------------------------------------");
+                if (confirm1) {
 
+                    // Why you no work?
+                    contacts.remove(searchInput);
 
+                    System.out.println("-----------------------------------------");
+                    System.out.println("Contact was deleted.");
+                    System.out.println("-----------------------------------------");
+                }
+            }
+        }
+        if (!foundContact) {
+            System.out.println("\n-----------------------------------------");
+            System.out.println("No contacts were found.  Please try your search again.");
+            System.out.println("-----------------------------------------");
+            deleteContact(contacts);
+        }
 
+        System.out.println("\n-----------------------------------------");
+        System.out.println("\nWould you like to delete another contact?");
+        String confirmDeleteAgain = Input.getString("\nEnter (Y) to delete another contact or (N) to return to main menu:");
+        Boolean confirm2 = Input.yesNo(confirmDeleteAgain);
+        System.out.println("-----------------------------------------");
+
+        if (confirm2) {
+            deleteContact(contacts);
+        } else {
+            executeChoice(contacts, getChoice());
+        }
+
+    }
 }
 
 
