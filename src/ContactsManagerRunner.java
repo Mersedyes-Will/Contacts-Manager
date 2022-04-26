@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import fileio.*;
 
 public class ContactsManagerRunner {
 
@@ -237,7 +238,6 @@ public class ContactsManagerRunner {
         } else {
             executeChoice(contacts, getChoice());
         }
-
     }
 }
 
